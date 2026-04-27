@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card shadow p-4 mt-5">
+    <h2 class="mb-4">Guide Evaluation</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-danger">Submit Evaluation</button>
+    </form>
+</div>
+{% endblock %}
