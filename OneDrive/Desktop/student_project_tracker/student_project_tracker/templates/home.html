@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card shadow p-4 mt-5">
+    <h1 class="mb-4">Student Project & Milestone Tracker</h1>
+
+    <p class="text-muted">
+        Manage project registration, guide allotment, milestone uploads, and evaluation workflow.
+    </p>
+
+    <div class="mt-4">
+        <a href="/register/" class="btn btn-primary m-2">Project Registration</a>
+        <a href="/upload/" class="btn btn-warning m-2">Milestone Upload</a>
+        <a href="/evaluate/" class="btn btn-danger m-2">Evaluation</a>
+        <a href="/admin/" class="btn btn-dark m-2">Admin Panel</a>
+        <a href="/projects-list/" class="btn btn-success m-2">View Projects</a>
+    </div>
+</div>
+{% endblock %}

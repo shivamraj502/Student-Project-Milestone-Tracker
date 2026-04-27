@@ -4,7 +4,12 @@ from .forms import ProjectForm, GuideAllotmentForm, MilestoneForm, EvaluationFor
 
 
 def home(request):
-    return redirect("register")
+    return render(request, "home.html")
+
+
+def project_list(request):
+    projects = Project.objects.all()
+    return render(request, "project_list.html", {"projects": projects})
 
 
 def register_project(request):
