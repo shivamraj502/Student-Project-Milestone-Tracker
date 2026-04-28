@@ -1,42 +1,93 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="card shadow-lg p-5 bg-white">
-    <h2 class="mb-4">📝 Project Registration</h2>
 
-    <form method="POST">
-        {% csrf_token %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="glass-card-static animate-in">
 
-        <div class="row">
-            <div class="col-md-6">{{ form.title.label_tag }} {{ form.title }}</div>
-            <div class="col-md-6">{{ form.domain.label_tag }} {{ form.domain }}</div>
+            <!-- Page Header -->
+            <div class="page-header">
+                <h2><i class="bi bi-pencil-square"></i> <span class="gradient-text">Project Registration</span></h2>
+                <p>Register a new capstone project with full team details.</p>
+            </div>
+
+            <form method="POST" class="form-row-gap">
+                {% csrf_token %}
+
+                <!-- Project Info -->
+                <div class="form-section-title animate-in delay-1">
+                    <i class="bi bi-info-circle-fill"></i> Project Information
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Project Title</label>
+                        {{ form.title }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Domain</label>
+                        {{ form.domain }}
+                    </div>
+                </div>
+
+                <!-- Team Members -->
+                <div class="form-section-title animate-in delay-2">
+                    <i class="bi bi-people-fill"></i> Team Members
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Student 1 — Name</label>
+                        {{ form.student1_name }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Student 1 — USN</label>
+                        {{ form.student1_usn }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Student 2 — Name</label>
+                        {{ form.student2_name }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Student 2 — USN</label>
+                        {{ form.student2_usn }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Student 3 — Name <span style="color: var(--text-muted); font-weight: 400;">(Optional)</span></label>
+                        {{ form.student3_name }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Student 3 — USN</label>
+                        {{ form.student3_usn }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Student 4 — Name <span style="color: var(--text-muted); font-weight: 400;">(Optional)</span></label>
+                        {{ form.student4_name }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Student 4 — USN</label>
+                        {{ form.student4_usn }}
+                    </div>
+                </div>
+
+                <div class="text-center mt-4 animate-in delay-3">
+                    <button class="btn-glow" type="submit">
+                        <i class="bi bi-check-lg"></i> Register Project
+                    </button>
+                </div>
+            </form>
+
         </div>
-
-        <hr>
-
-        <h4>Team Members</h4>
-
-        <div class="row">
-            <div class="col-md-6">{{ form.student1_name.label_tag }} {{ form.student1_name }}</div>
-            <div class="col-md-6">{{ form.student1_usn.label_tag }} {{ form.student1_usn }}</div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">{{ form.student2_name.label_tag }} {{ form.student2_name }}</div>
-            <div class="col-md-6">{{ form.student2_usn.label_tag }} {{ form.student2_usn }}</div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">{{ form.student3_name.label_tag }} {{ form.student3_name }}</div>
-            <div class="col-md-6">{{ form.student3_usn.label_tag }} {{ form.student3_usn }}</div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">{{ form.student4_name.label_tag }} {{ form.student4_name }}</div>
-            <div class="col-md-6">{{ form.student4_usn.label_tag }} {{ form.student4_usn }}</div>
-        </div>
-
-        <button class="btn btn-primary mt-4">Register Project</button>
-    </form>
+    </div>
 </div>
+
 {% endblock %}

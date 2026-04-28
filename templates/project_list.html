@@ -1,58 +1,91 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="card shadow-lg p-4 rounded-4 bg-white mt-4">
 
-    <h2 class="mb-4">📊 Registered Projects</h2>
+<!-- Page Header -->
+<div class="page-header animate-in">
+    <h2><i class="bi bi-folder2-open"></i> <span class="gradient-text">Registered Projects</span></h2>
+    <p>Browse all capstone projects, their teams, assigned guides, and uploaded milestones.</p>
+</div>
 
-    <input type="text" id="searchInput" class="form-control mb-4" placeholder="Search projects...">
+<!-- Search Bar -->
+<div class="search-container animate-in delay-1">
+    <i class="bi bi-search search-icon"></i>
+    <input type="text" id="searchInput" placeholder="Search by title, USN, domain, or guide...">
+</div>
 
-    <div class="row" id="projectCards">
+<!-- Project Cards Grid -->
+<div class="row g-4" id="projectCards">
+    {% for project in projects %}
+    <div class="col-md-6 project-item animate-in delay-{{ forloop.counter|add:"1" }}">
+        <div class="project-card">
 
-        {% for project in projects %}
-        <div class="col-md-6 mb-4 project-item">
-            <div class="card p-4 shadow-sm border-0 rounded-4">
+            <h4>{{ project.title }}</h4>
+            <span class="domain-badge">{{ project.domain }}</span>
 
-                <h4>{{ project.title }}</h4>
-                <p><strong>Domain:</strong> {{ project.domain }}</p>
+            <hr>
 
-                <hr>
+            <!-- Team Members -->
+            <div class="student-info">
+                <i class="bi bi-person-fill" style="color: var(--accent-purple);"></i>
+                {{ project.student1_name }} <span class="usn">{{ project.student1_usn }}</span>
+            </div>
+            <div class="student-info">
+                <i class="bi bi-person-fill" style="color: var(--accent-blue);"></i>
+                {{ project.student2_name }} <span class="usn">{{ project.student2_usn }}</span>
+            </div>
 
-                <p><strong>Student 1:</strong> {{ project.student1_name }} ({{ project.student1_usn }})</p>
-                <p><strong>Student 2:</strong> {{ project.student2_name }} ({{ project.student2_usn }})</p>
+            {% if project.student3_name %}
+            <div class="student-info">
+                <i class="bi bi-person-fill" style="color: var(--accent-cyan);"></i>
+                {{ project.student3_name }} <span class="usn">{{ project.student3_usn }}</span>
+            </div>
+            {% endif %}
 
-                {% if project.student3_name %}
-                <p><strong>Student 3:</strong> {{ project.student3_name }} ({{ project.student3_usn }})</p>
-                {% endif %}
+            {% if project.student4_name %}
+            <div class="student-info">
+                <i class="bi bi-person-fill" style="color: var(--accent-emerald);"></i>
+                {{ project.student4_name }} <span class="usn">{{ project.student4_usn }}</span>
+            </div>
+            {% endif %}
 
-                {% if project.student4_name %}
-                <p><strong>Student 4:</strong> {{ project.student4_name }} ({{ project.student4_usn }})</p>
-                {% endif %}
+            <hr>
 
-                <hr>
+            <!-- Guide -->
+            <div class="student-info">
+                <i class="bi bi-person-badge-fill" style="color: var(--accent-amber);"></i>
+                <strong>Guide:</strong>
+                <span class="guide-name">{{ project.guide|default:"Not Assigned" }}</span>
+            </div>
 
-                <p><strong>Guide:</strong> {{ project.guide }}</p>
+            <hr>
 
-                <hr>
-
-                <h6>Uploaded Milestones:</h6>
+            <!-- Milestones -->
+            <div style="margin-top: 0.5rem;">
+                <div style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 600;">
+                    <i class="bi bi-flag-fill"></i> Milestones
+                </div>
 
                 {% for milestone in project.milestone_set.all %}
-                <p>
-                    <strong>{{ milestone.stage }}</strong> —
-                    <a href="{{ milestone.file.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
-                        View File
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                    <span style="color: var(--text-secondary); font-size: 0.9rem;">{{ milestone.stage }}</span>
+                    <a href="{{ milestone.file.url }}" target="_blank" class="milestone-link">
+                        <i class="bi bi-file-earmark-arrow-down"></i> View
                     </a>
-                </p>
+                </div>
                 {% empty %}
-                <p class="text-muted">No milestones uploaded yet</p>
+                <p style="color: var(--text-muted); font-size: 0.85rem; font-style: italic; margin: 0;">No milestones uploaded yet</p>
                 {% endfor %}
-
             </div>
-        </div>
-        {% endfor %}
 
+        </div>
     </div>
+    {% empty %}
+    <div class="col-12 text-center" style="padding: 3rem;">
+        <i class="bi bi-inbox" style="font-size: 3rem; color: var(--text-muted);"></i>
+        <p style="color: var(--text-secondary); margin-top: 1rem;">No projects registered yet. <a href="/register/" style="color: var(--accent-purple);">Register one now!</a></p>
+    </div>
+    {% endfor %}
 </div>
 
 <script>
@@ -65,4 +98,5 @@
         });
     });
 </script>
+
 {% endblock %}

@@ -1,39 +1,45 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="card shadow-lg border-0 rounded-4 p-5 bg-white">
 
-        <div class="text-center mb-4">
-            <h2 class="fw-bold text-warning">📂 Milestone Upload</h2>
-            <p class="text-muted">Upload project reports, synopsis, and milestone files.</p>
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="glass-card-static animate-in">
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <h2><i class="bi bi-cloud-arrow-up-fill"></i> <span class="gradient-text">Milestone Upload</span></h2>
+                <p>Submit project reports, synopsis documents, and progress files.</p>
+            </div>
+
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="mb-4 animate-in delay-1">
+                    <label class="form-label">Select Project</label>
+                    {{ form.project }}
+                </div>
+
+                <div class="mb-4 animate-in delay-2">
+                    <label class="form-label">Milestone Stage</label>
+                    {{ form.stage }}
+                </div>
+
+                <div class="mb-4 animate-in delay-3">
+                    <label class="form-label">Upload File</label>
+                    {{ form.file }}
+                </div>
+
+                <div class="text-center mt-4 animate-in delay-4">
+                    <button class="btn-glow amber" type="submit">
+                        <i class="bi bi-upload"></i> Upload Milestone
+                    </button>
+                </div>
+
+            </form>
+
         </div>
-
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-
-            <div class="mb-3">
-                <label class="form-label fw-semibold">Project</label>
-                {{ form.project }}
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label fw-semibold">Stage</label>
-                {{ form.stage }}
-            </div>
-
-            <div class="mb-4">
-                <label class="form-label fw-semibold">Upload File</label>
-                {{ form.file }}
-            </div>
-
-            <div class="text-center">
-                <button class="btn btn-warning px-5 py-2 rounded-pill">
-                    Upload Milestone
-                </button>
-            </div>
-
-        </form>
     </div>
 </div>
+
 {% endblock %}

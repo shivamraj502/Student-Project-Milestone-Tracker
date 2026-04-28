@@ -1,29 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="card shadow-lg border-0 rounded-4 p-5 bg-white">
 
-        <div class="text-center mb-4">
-            <h2 class="fw-bold text-success">👨‍🏫 Guide Allotment</h2>
-            <p class="text-muted">Assign a faculty guide to the selected student project.</p>
+<div class="row justify-content-center">
+    <div class="col-lg-5">
+        <div class="glass-card-static animate-in">
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <h2><i class="bi bi-person-badge-fill"></i> <span class="gradient-text">Guide Allotment</span></h2>
+                <p>Assign a faculty guide to the selected student project.</p>
+            </div>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="mb-4 animate-in delay-1">
+                    <label class="form-label">Select Guide</label>
+                    {{ form.guide }}
+                </div>
+
+                <div class="text-center mt-4 animate-in delay-2">
+                    <button class="btn-glow emerald" type="submit">
+                        <i class="bi bi-person-check-fill"></i> Assign Guide
+                    </button>
+                </div>
+
+            </form>
+
         </div>
-
-        <form method="POST">
-            {% csrf_token %}
-
-            <div class="mb-4">
-                <label class="form-label fw-semibold">Select Guide</label>
-                {{ form.guide }}
-            </div>
-
-            <div class="text-center">
-                <button class="btn btn-success px-5 py-2 rounded-pill">
-                    Assign Guide
-                </button>
-            </div>
-
-        </form>
     </div>
 </div>
+
 {% endblock %}

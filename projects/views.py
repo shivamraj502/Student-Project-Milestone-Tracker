@@ -1,10 +1,16 @@
 from django.shortcuts import render, redirect
-from .models import Project
+from .models import Project, Guide, Milestone, Evaluation
 from .forms import ProjectForm, GuideAllotmentForm, MilestoneForm, EvaluationForm
 
 
 def home(request):
-    return render(request, "home.html")
+    context = {
+        "project_count": Project.objects.count(),
+        "milestone_count": Milestone.objects.count(),
+        "guide_count": Guide.objects.count(),
+        "evaluation_count": Evaluation.objects.count(),
+    }
+    return render(request, "home.html", context)
 
 
 def project_list(request):

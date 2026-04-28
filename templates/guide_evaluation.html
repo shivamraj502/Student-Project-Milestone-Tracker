@@ -1,44 +1,52 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="card shadow-lg border-0 rounded-4 p-5 bg-white">
 
-        <div class="text-center mb-4">
-            <h2 class="fw-bold text-danger">⭐ Project Evaluation</h2>
-            <p class="text-muted">Guide reviews uploaded milestone quality before approval.</p>
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="glass-card-static animate-in">
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <h2><i class="bi bi-star-fill"></i> <span class="gradient-text">Project Evaluation</span></h2>
+                <p>Faculty guide reviews uploaded milestone quality and provides evaluation.</p>
+            </div>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="mb-4 animate-in delay-1">
+                    <label class="form-label">Select Project</label>
+                    {{ form.project }}
+                </div>
+
+                <div class="mb-4 animate-in delay-2">
+                    <label class="form-label">Guide Rating</label>
+                    {{ form.guide_rating }}
+                </div>
+
+                <div class="mb-4 animate-in delay-3">
+                    <label class="form-label">Comments & Remarks</label>
+                    {{ form.comments }}
+                </div>
+
+                <div class="mb-4 animate-in delay-4" style="display: flex; align-items: center; gap: 12px;">
+                    {{ form.publication_status }}
+                    <label style="color: var(--text-secondary); font-weight: 600; font-size: 0.9rem; margin: 0; cursor: pointer;">
+                        Ready for Publication
+                    </label>
+                </div>
+
+                <div class="text-center mt-4 animate-in delay-5">
+                    <button class="btn-glow rose" type="submit">
+                        <i class="bi bi-send-fill"></i> Submit Evaluation
+                    </button>
+                </div>
+
+            </form>
+
         </div>
-
-        <form method="POST">
-            {% csrf_token %}
-
-            <div class="mb-3">
-                <label class="form-label fw-semibold">Project</label>
-                {{ form.project }}
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label fw-semibold">Guide Rating</label>
-                {{ form.guide_rating }}
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label fw-semibold">Comments</label>
-                {{ form.comments }}
-            </div>
-
-            <div class="mb-4">
-                <label class="form-label fw-semibold">Ready for Publication</label>
-                {{ form.publication_status }}
-            </div>
-
-            <div class="text-center">
-                <button class="btn btn-danger px-5 py-2 rounded-pill">
-                    Submit Evaluation
-                </button>
-            </div>
-
-        </form>
     </div>
 </div>
+
 {% endblock %}
