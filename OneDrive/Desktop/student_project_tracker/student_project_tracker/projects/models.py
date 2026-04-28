@@ -39,8 +39,14 @@ class Milestone(models.Model):
 
 
 class Evaluation(models.Model):
+    RATING_CHOICES = [
+        ("Excellent", "Excellent"),
+        ("Good", "Good"),
+        ("Average", "Average"),
+        ("Needs Improvement", "Needs Improvement"),
+    ]
+
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    guide_rating = models.IntegerField()
+    guide_rating = models.CharField(max_length=30, choices=RATING_CHOICES)
     comments = models.TextField()
     publication_status = models.BooleanField(default=False)
-    certificate_copy = models.FileField(upload_to="reports/", null=True, blank=True)

@@ -38,10 +38,10 @@ class MilestoneForm(forms.ModelForm):
 class EvaluationForm(forms.ModelForm):
     class Meta:
         model = Evaluation
-        fields = [
-            "project",
-            "guide_rating",
-            "comments",
-            "publication_status",
-            "certificate_copy",
-        ]
+        fields = ["project", "guide_rating", "comments", "publication_status"]
+        labels = {"publication_status": "Ready for Publication"}
+        widgets = {
+            "comments": forms.Textarea(
+                attrs={"placeholder": "Enter faculty remarks here..."}
+            )
+        }

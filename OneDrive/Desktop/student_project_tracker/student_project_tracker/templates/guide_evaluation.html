@@ -6,10 +6,10 @@
 
         <div class="text-center mb-4">
             <h2 class="fw-bold text-danger">⭐ Project Evaluation</h2>
-            <p class="text-muted">Guide reviews project quality and publication readiness.</p>
+            <p class="text-muted">Guide reviews uploaded milestone quality before approval.</p>
         </div>
 
-        <form method="POST" enctype="multipart/form-data">
+        <form method="POST">
             {% csrf_token %}
 
             <div class="mb-3">
@@ -28,7 +28,7 @@
             </div>
 
             <div class="mb-4">
-                <label class="form-label fw-semibold">Publication Status</label>
+                <label class="form-label fw-semibold">Ready for Publication</label>
                 {{ form.publication_status }}
             </div>
 

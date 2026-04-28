@@ -1,26 +1,57 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="card shadow-lg p-4 bg-white">
+<div class="card shadow-lg p-4 rounded-4 bg-white mt-4">
 
     <h2 class="mb-4">📊 Registered Projects</h2>
 
     <input type="text" id="searchInput" class="form-control mb-4" placeholder="Search projects...">
 
     <div class="row" id="projectCards">
+
         {% for project in projects %}
         <div class="col-md-6 mb-4 project-item">
-            <div class="card p-4 shadow-sm">
+            <div class="card p-4 shadow-sm border-0 rounded-4">
+
                 <h4>{{ project.title }}</h4>
                 <p><strong>Domain:</strong> {{ project.domain }}</p>
+
+                <hr>
+
                 <p><strong>Student 1:</strong> {{ project.student1_name }} ({{ project.student1_usn }})</p>
                 <p><strong>Student 2:</strong> {{ project.student2_name }} ({{ project.student2_usn }})</p>
+
+                {% if project.student3_name %}
                 <p><strong>Student 3:</strong> {{ project.student3_name }} ({{ project.student3_usn }})</p>
+                {% endif %}
+
+                {% if project.student4_name %}
                 <p><strong>Student 4:</strong> {{ project.student4_name }} ({{ project.student4_usn }})</p>
+                {% endif %}
+
+                <hr>
+
                 <p><strong>Guide:</strong> {{ project.guide }}</p>
+
+                <hr>
+
+                <h6>Uploaded Milestones:</h6>
+
+                {% for milestone in project.milestone_set.all %}
+                <p>
+                    <strong>{{ milestone.stage }}</strong> —
+                    <a href="{{ milestone.file.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                        View File
+                    </a>
+                </p>
+                {% empty %}
+                <p class="text-muted">No milestones uploaded yet</p>
+                {% endfor %}
+
             </div>
         </div>
         {% endfor %}
+
     </div>
 </div>
 
