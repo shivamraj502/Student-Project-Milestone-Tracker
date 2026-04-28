@@ -8,10 +8,15 @@
     <p>Browse all capstone projects, their teams, assigned guides, and uploaded milestones.</p>
 </div>
 
-<!-- Search Bar -->
-<div class="search-container animate-in delay-1">
-    <i class="bi bi-search search-icon"></i>
-    <input type="text" id="searchInput" placeholder="Search by title, USN, domain, or guide...">
+<!-- Action Bar: Search + Export -->
+<div class="action-bar animate-in delay-1">
+    <div class="search-container" style="margin: 0;">
+        <i class="bi bi-search search-icon"></i>
+        <input type="text" id="searchInput" placeholder="Search by title, USN, domain, or guide...">
+    </div>
+    <a href="{% url 'export_csv' %}" class="btn-glow emerald btn-sm-glow" id="exportBtn">
+        <i class="bi bi-download"></i> Export CSV
+    </a>
 </div>
 
 <!-- Project Cards Grid -->
@@ -20,8 +25,20 @@
     <div class="col-md-6 project-item animate-in delay-{{ forloop.counter|add:"1" }}">
         <div class="project-card">
 
-            <h4>{{ project.title }}</h4>
-            <span class="domain-badge">{{ project.domain }}</span>
+            <div class="project-card-header">
+                <div>
+                    <h4>{{ project.title }}</h4>
+                    <span class="domain-badge">{{ project.domain }}</span>
+                </div>
+                {% with eval=project.evaluation_set.first %}
+                {% if eval and eval.marks is not None %}
+                <div class="marks-badge">
+                    <span class="marks-value">{{ eval.marks }}</span>
+                    <span class="marks-label">/ 100</span>
+                </div>
+                {% endif %}
+                {% endwith %}
+            </div>
 
             <hr>
 
@@ -60,8 +77,29 @@
 
             <hr>
 
+            <!-- Evaluation Status -->
+            {% with eval=project.evaluation_set.first %}
+            {% if eval %}
+            <div class="eval-status-row">
+                <div class="eval-chip rating">
+                    <i class="bi bi-star-fill"></i> {{ eval.guide_rating }}
+                </div>
+                {% if eval.publication_status %}
+                <div class="eval-chip published">
+                    <i class="bi bi-check-circle-fill"></i> Published
+                </div>
+                {% endif %}
+                {% if eval.coordinator_approval %}
+                <div class="eval-chip approved">
+                    <i class="bi bi-shield-fill-check"></i> Approved
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+            {% endwith %}
+
             <!-- Milestones -->
-            <div style="margin-top: 0.5rem;">
+            <div style="margin-top: 0.75rem;">
                 <div style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 600;">
                     <i class="bi bi-flag-fill"></i> Milestones
                 </div>

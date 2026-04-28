@@ -751,3 +751,150 @@ hr {
 .form-section-title i {
     color: var(--accent-purple);
 }
+
+/* ---------- Validation Alert ---------- */
+.alert-glass {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.alert-glass.rose {
+    background: rgba(244, 63, 94, 0.08);
+    border: 1px solid rgba(244, 63, 94, 0.2);
+    color: #fda4af;
+}
+
+.alert-glass.rose i {
+    color: var(--accent-rose);
+    font-size: 1.15rem;
+    margin-top: 2px;
+}
+
+.alert-glass .error-list {
+    margin: 6px 0 0 0;
+    padding-left: 18px;
+    list-style: disc;
+    color: var(--text-secondary);
+}
+
+.alert-glass .error-list li {
+    margin-bottom: 3px;
+}
+
+/* ---------- Field Hints ---------- */
+.field-hint {
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.field-hint i {
+    color: var(--accent-cyan);
+    font-size: 0.85rem;
+}
+
+.hint-text {
+    color: var(--text-muted);
+    font-weight: 400;
+    font-size: 0.8rem;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+/* ---------- Action Bar (Search + Export) ---------- */
+.action-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.action-bar .search-container {
+    flex: 1;
+    min-width: 220px;
+}
+
+.btn-sm-glow {
+    padding: 10px 24px !important;
+    font-size: 0.88rem !important;
+    white-space: nowrap;
+}
+
+/* ---------- Marks Badge ---------- */
+.project-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.marks-badge {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+    background: rgba(168, 85, 247, 0.1);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: var(--radius-md);
+    padding: 8px 14px;
+    flex-shrink: 0;
+}
+
+.marks-badge .marks-value {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: var(--accent-purple);
+    line-height: 1;
+}
+
+.marks-badge .marks-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+/* ---------- Evaluation Status Chips ---------- */
+.eval-status-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+}
+
+.eval-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.eval-chip.rating {
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    color: var(--accent-amber);
+}
+
+.eval-chip.published {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    color: var(--accent-emerald);
+}
+
+.eval-chip.approved {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    color: var(--accent-blue);
+}

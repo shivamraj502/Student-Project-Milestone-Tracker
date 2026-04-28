@@ -9,20 +9,48 @@
             <!-- Page Header -->
             <div class="page-header">
                 <h2><i class="bi bi-star-fill"></i> <span class="gradient-text">Project Evaluation</span></h2>
-                <p>Faculty guide reviews uploaded milestone quality and provides evaluation.</p>
+                <p>Faculty guide reviews uploaded milestone quality, assigns marks, and provides evaluation.</p>
             </div>
 
-            <form method="POST">
+            <!-- Validation Errors -->
+            {% if form.errors %}
+            <div class="alert-glass rose animate-in delay-1">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <div>
+                    <strong>Please fix the following errors:</strong>
+                    <ul class="error-list">
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <li>{{ field|title }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+
+            <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
+
+                <!-- Section: Core Evaluation -->
+                <div class="form-section-title animate-in delay-1">
+                    <i class="bi bi-clipboard-data-fill"></i> Core Evaluation
+                </div>
 
                 <div class="mb-4 animate-in delay-1">
                     <label class="form-label">Select Project</label>
                     {{ form.project }}
                 </div>
 
-                <div class="mb-4 animate-in delay-2">
-                    <label class="form-label">Guide Rating</label>
-                    {{ form.guide_rating }}
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-3 animate-in delay-2">
+                        <label class="form-label">Guide Rating</label>
+                        {{ form.guide_rating }}
+                    </div>
+                    <div class="col-md-6 mb-3 animate-in delay-2">
+                        <label class="form-label">Marks Allotment <span class="hint-text">(0 – 100)</span></label>
+                        {{ form.marks }}
+                    </div>
                 </div>
 
                 <div class="mb-4 animate-in delay-3">
@@ -30,11 +58,21 @@
                     {{ form.comments }}
                 </div>
 
+                <!-- Section: Publication & Certificate -->
+                <div class="form-section-title animate-in delay-4">
+                    <i class="bi bi-journal-check"></i> Publication & Certificate
+                </div>
+
                 <div class="mb-4 animate-in delay-4" style="display: flex; align-items: center; gap: 12px;">
                     {{ form.publication_status }}
                     <label style="color: var(--text-secondary); font-weight: 600; font-size: 0.9rem; margin: 0; cursor: pointer;">
                         Ready for Publication
                     </label>
+                </div>
+
+                <div class="mb-4 animate-in delay-4">
+                    <label class="form-label">Certificate Copy <span class="hint-text">(Optional – PDF/Image)</span></label>
+                    {{ form.certificate_copy }}
                 </div>
 
                 <div class="text-center mt-4 animate-in delay-5">

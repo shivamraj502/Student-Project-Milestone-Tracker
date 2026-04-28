@@ -12,6 +12,23 @@
                 <p>Submit project reports, synopsis documents, and progress files.</p>
             </div>
 
+            <!-- Validation Errors -->
+            {% if form.errors %}
+            <div class="alert-glass rose animate-in delay-1">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <div>
+                    <strong>Please fix the following errors:</strong>
+                    <ul class="error-list">
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <li>{{ field|title }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
 
@@ -23,11 +40,17 @@
                 <div class="mb-4 animate-in delay-2">
                     <label class="form-label">Milestone Stage</label>
                     {{ form.stage }}
+                    <div class="field-hint">
+                        <i class="bi bi-info-circle"></i> Choose one of: Synopsis, Phase 1, Phase 2, Final Report, Publication
+                    </div>
                 </div>
 
                 <div class="mb-4 animate-in delay-3">
                     <label class="form-label">Upload File</label>
                     {{ form.file }}
+                    <div class="field-hint">
+                        <i class="bi bi-file-earmark-check"></i> Accepted: PDF, DOC, DOCX, ZIP &middot; Max 50 MB
+                    </div>
                 </div>
 
                 <div class="text-center mt-4 animate-in delay-4">
