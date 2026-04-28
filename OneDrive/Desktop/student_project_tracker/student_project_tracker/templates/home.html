@@ -1,19 +1,80 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="card shadow p-4 mt-5">
-    <h1 class="mb-4">Student Project & Milestone Tracker</h1>
+<div class="container mt-5">
 
-    <p class="text-muted">
-        Manage project registration, guide allotment, milestone uploads, and evaluation workflow.
-    </p>
+    <div class="p-5 rounded-4 shadow-lg bg-white">
 
-    <div class="mt-4">
-        <a href="/register/" class="btn btn-primary m-2">Project Registration</a>
-        <a href="/upload/" class="btn btn-warning m-2">Milestone Upload</a>
-        <a href="/evaluate/" class="btn btn-danger m-2">Evaluation</a>
-        <a href="/admin/" class="btn btn-dark m-2">Admin Panel</a>
-        <a href="/projects-list/" class="btn btn-success m-2">View Projects</a>
+        <div class="text-center mb-5">
+            <h1 class="fw-bold display-5 text-dark">
+                🚀 Student Project & Milestone Tracker
+            </h1>
+            <p class="text-secondary fs-5 mt-3">
+                Smart academic workflow for registration, guide allotment, milestone uploads and evaluation.
+            </p>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <a href="/register/" class="text-decoration-none">
+                    <div class="card border-0 shadow-sm p-4 h-100 dashboard-card">
+                        <h4>📝 Register Project</h4>
+                        <p class="text-muted">Add new student capstone projects.</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="/upload/" class="text-decoration-none">
+                    <div class="card border-0 shadow-sm p-4 h-100 dashboard-card">
+                        <h4>📂 Upload Milestone</h4>
+                        <p class="text-muted">Submit reports and documents.</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="/evaluate/" class="text-decoration-none">
+                    <div class="card border-0 shadow-sm p-4 h-100 dashboard-card">
+                        <h4>⭐ Evaluation</h4>
+                        <p class="text-muted">Guide reviews and publication workflow.</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-6">
+                <a href="/projects-list/" class="text-decoration-none">
+                    <div class="card border-0 shadow-sm p-4 h-100 dashboard-card">
+                        <h4>📊 View Projects</h4>
+                        <p class="text-muted">Track registered projects and guides.</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-6">
+                <a href="/admin/" class="text-decoration-none">
+                    <div class="card border-0 shadow-sm p-4 h-100 dashboard-card">
+                        <h4>⚙ Admin Panel</h4>
+                        <p class="text-muted">Manage guides and records.</p>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+
     </div>
 </div>
+
+<style>
+    .dashboard-card {
+        transition: 0.3s ease;
+        border-radius: 20px;
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    }
+</style>
 {% endblock %}

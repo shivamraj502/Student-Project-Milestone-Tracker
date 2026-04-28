@@ -1,0 +1,45 @@
+body {
+    background: linear-gradient(to right, #eef2ff, #f8f9fa);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.navbar {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+    border-radius: 20px;
+    transition: 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+}
+
+.btn {
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.table {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.dashboard-card {
+    min-height: 180px;
+}
+
+select,
+input,
+textarea {
+    border-radius: 12px !important;
+    border: 1px solid #ced4da !important;
+    padding: 10px !important;
+    width: 100%;
+}
+
+textarea {
+    min-height: 120px;
+}

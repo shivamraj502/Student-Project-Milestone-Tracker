@@ -1,13 +1,42 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="card shadow p-4 mt-5">
-    <h2 class="mb-4">Project Registration</h2>
+<div class="card shadow-lg p-5 bg-white">
+    <h2 class="mb-4">📝 Project Registration</h2>
 
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-primary">Register</button>
+
+        <div class="row">
+            <div class="col-md-6">{{ form.title.label_tag }} {{ form.title }}</div>
+            <div class="col-md-6">{{ form.domain.label_tag }} {{ form.domain }}</div>
+        </div>
+
+        <hr>
+
+        <h4>Team Members</h4>
+
+        <div class="row">
+            <div class="col-md-6">{{ form.student1_name.label_tag }} {{ form.student1_name }}</div>
+            <div class="col-md-6">{{ form.student1_usn.label_tag }} {{ form.student1_usn }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">{{ form.student2_name.label_tag }} {{ form.student2_name }}</div>
+            <div class="col-md-6">{{ form.student2_usn.label_tag }} {{ form.student2_usn }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">{{ form.student3_name.label_tag }} {{ form.student3_name }}</div>
+            <div class="col-md-6">{{ form.student3_usn.label_tag }} {{ form.student3_usn }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">{{ form.student4_name.label_tag }} {{ form.student4_name }}</div>
+            <div class="col-md-6">{{ form.student4_usn.label_tag }} {{ form.student4_usn }}</div>
+        </div>
+
+        <button class="btn btn-primary mt-4">Register Project</button>
     </form>
 </div>
 {% endblock %}

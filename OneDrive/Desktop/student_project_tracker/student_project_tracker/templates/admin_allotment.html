@@ -1,9 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="btn btn-success">Assign Guide</button>
-</form>
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4 p-5 bg-white">
+
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-success">👨‍🏫 Guide Allotment</h2>
+            <p class="text-muted">Assign a faculty guide to the selected student project.</p>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-4">
+                <label class="form-label fw-semibold">Select Guide</label>
+                {{ form.guide }}
+            </div>
+
+            <div class="text-center">
+                <button class="btn btn-success px-5 py-2 rounded-pill">
+                    Assign Guide
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
 {% endblock %}

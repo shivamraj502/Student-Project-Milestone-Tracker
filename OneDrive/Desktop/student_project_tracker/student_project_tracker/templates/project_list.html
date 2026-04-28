@@ -1,28 +1,37 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="card shadow p-4 mt-4">
-    <h2>Registered Projects</h2>
+<div class="card shadow-lg p-4 bg-white">
 
-    <table class="table table-bordered mt-3">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Domain</th>
-                <th>Team Members</th>
-                <th>Guide</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for project in projects %}
-            <tr>
-                <td>{{ project.title }}</td>
-                <td>{{ project.domain }}</td>
-                <td>{{ project.team_members }}</td>
-                <td>{{ project.guide }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <h2 class="mb-4">📊 Registered Projects</h2>
+
+    <input type="text" id="searchInput" class="form-control mb-4" placeholder="Search projects...">
+
+    <div class="row" id="projectCards">
+        {% for project in projects %}
+        <div class="col-md-6 mb-4 project-item">
+            <div class="card p-4 shadow-sm">
+                <h4>{{ project.title }}</h4>
+                <p><strong>Domain:</strong> {{ project.domain }}</p>
+                <p><strong>Student 1:</strong> {{ project.student1_name }} ({{ project.student1_usn }})</p>
+                <p><strong>Student 2:</strong> {{ project.student2_name }} ({{ project.student2_usn }})</p>
+                <p><strong>Student 3:</strong> {{ project.student3_name }} ({{ project.student3_usn }})</p>
+                <p><strong>Student 4:</strong> {{ project.student4_name }} ({{ project.student4_usn }})</p>
+                <p><strong>Guide:</strong> {{ project.guide }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
+
+<script>
+    document.getElementById('searchInput').addEventListener('keyup', function () {
+        let value = this.value.toLowerCase();
+        let items = document.querySelectorAll('.project-item');
+
+        items.forEach(item => {
+            item.style.display = item.innerText.toLowerCase().includes(value) ? '' : 'none';
+        });
+    });
+</script>
 {% endblock %}

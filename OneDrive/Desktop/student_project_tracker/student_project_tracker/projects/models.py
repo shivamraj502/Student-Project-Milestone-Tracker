@@ -13,7 +13,19 @@ class Guide(models.Model):
 class Project(models.Model):
     title = models.CharField(max_length=200, unique=True)
     domain = models.CharField(max_length=100)
-    team_members = models.TextField()
+
+    student1_name = models.CharField(max_length=100)
+    student1_usn = models.CharField(max_length=20)
+
+    student2_name = models.CharField(max_length=100)
+    student2_usn = models.CharField(max_length=20)
+
+    student3_name = models.CharField(max_length=100, blank=True)
+    student3_usn = models.CharField(max_length=20, blank=True)
+
+    student4_name = models.CharField(max_length=100, blank=True)
+    student4_usn = models.CharField(max_length=20, blank=True)
+
     guide = models.ForeignKey(Guide, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
