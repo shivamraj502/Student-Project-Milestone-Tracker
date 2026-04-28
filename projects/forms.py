@@ -34,14 +34,26 @@ class MilestoneForm(forms.ModelForm):
         model = Milestone
         fields = ["project", "stage", "file"]
 
+    def clean_file(self):
+        file = self.cleaned_data.get('file', False)
+        if file:
+            if file.size > 50 * 1024 * 1024:
+                raise forms.ValidationError("File size must be under 50MB.")
+        return file
+
 
 class EvaluationForm(forms.ModelForm):
     class Meta:
         model = Evaluation
-        fields = ["project", "guide_rating", "comments", "publication_status"]
+        fields = ["project", "guide_rating", "marks", "comments", "publication_status", "certificate_copy"]
         labels = {"publication_status": "Ready for Publication"}
         widgets = {
             "comments": forms.Textarea(
                 attrs={"placeholder": "Enter faculty remarks here..."}
             )
         }
+
+class CoordinatorApprovalForm(forms.ModelForm):
+    class Meta:
+        model = Evaluation
+        fields = ["coordinator_approval"]

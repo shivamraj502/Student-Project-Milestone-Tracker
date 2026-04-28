@@ -8,4 +8,5 @@ urlpatterns = [
     path("upload/", views.upload_milestone, name="upload"),
     path("evaluate/", views.evaluate_project, name="evaluate"),
     path("projects-list/", views.project_list, name="projects_list"),
+    path("export/", views.export_projects_csv, name="export_csv"),
 ]

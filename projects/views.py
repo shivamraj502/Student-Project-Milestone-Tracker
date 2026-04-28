@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
+import csv
 from .models import Project, Guide, Milestone, Evaluation
 from .forms import ProjectForm, GuideAllotmentForm, MilestoneForm, EvaluationForm
 
@@ -57,3 +59,39 @@ def evaluate_project(request):
         return redirect("evaluate")
 
     return render(request, "guide_evaluation.html", {"form": form})
+
+
+def export_projects_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="projects_export.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Title', 'Domain', 'Team Members', 'Marks', 'Publication Status', 'Guide'])
+
+    projects = Project.objects.all()
+
+    domain = request.GET.get('domain')
+    guide_id = request.GET.get('guide_id')
+    publication_status = request.GET.get('publication')
+
+    if domain:
+        projects = projects.filter(domain__iexact=domain)
+    if guide_id:
+        projects = projects.filter(guide_id=guide_id)
+    if publication_status:
+        is_published = publication_status.lower() == 'true'
+        projects = projects.filter(evaluation__publication_status=is_published)
+
+    for project in projects.distinct():
+        team_members = filter(None, [project.student1_name, project.student2_name, project.student3_name, project.student4_name])
+        team_str = ", ".join(team_members)
+        
+        evaluations = project.evaluation_set.all()
+        marks = evaluations.first().marks if evaluations.exists() else 'N/A'
+        pub_status = 'Yes' if (evaluations.exists() and evaluations.first().publication_status) else 'No'
+        guide_name = project.guide.name if project.guide else 'Unassigned'
+        
+        writer.writerow([project.title, project.domain, team_str, marks, pub_status, guide_name])
+
+    return response
+

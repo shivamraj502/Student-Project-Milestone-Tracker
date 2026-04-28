@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import FileExtensionValidator
 
 # Create your models here.
 
@@ -33,9 +34,20 @@ class Project(models.Model):
 
 
 class Milestone(models.Model):
+    STAGE_CHOICES = [
+        ("Synopsis", "Synopsis"),
+        ("Phase 1", "Phase 1"),
+        ("Phase 2", "Phase 2"),
+        ("Final Report", "Final Report"),
+        ("Publication", "Publication"),
+    ]
+
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    stage = models.CharField(max_length=100)
-    file = models.FileField(upload_to="reports/")
+    stage = models.CharField(max_length=100, choices=STAGE_CHOICES)
+    file = models.FileField(
+        upload_to="reports/",
+        validators=[FileExtensionValidator(['pdf', 'doc', 'docx', 'zip'])]
+    )
 
 
 class Evaluation(models.Model):
@@ -48,5 +60,8 @@ class Evaluation(models.Model):
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     guide_rating = models.CharField(max_length=30, choices=RATING_CHOICES)
+    marks = models.IntegerField(null=True, blank=True)
     comments = models.TextField()
+    coordinator_approval = models.BooleanField(default=False)
     publication_status = models.BooleanField(default=False)
+    certificate_copy = models.FileField(upload_to="certificates/", null=True, blank=True)
