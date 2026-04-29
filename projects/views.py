@@ -105,7 +105,9 @@ def home(request):
 
 @login_required(login_url="auth_selection")
 def project_list(request):
-    if user_has_role(request.user, "guide"):
+    if request.user.is_superuser:
+        projects = Project.objects.all()
+    elif user_has_role(request.user, "guide"):
         guide = Guide.objects.filter(user=request.user).first()
         projects = (
             Project.objects.filter(guide=guide) if guide else Project.objects.none()
