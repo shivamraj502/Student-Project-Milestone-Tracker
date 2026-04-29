@@ -12,6 +12,7 @@ class ProjectForm(forms.ModelForm):
         fields = [
             "title",
             "domain",
+            "guide",
             "student1_name",
             "student1_usn",
             "student2_name",
