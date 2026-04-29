@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="glass-card-static animate-in">
+            <div class="page-header">
+                <h2><i class="bi bi-person-circle"></i> {{ role }} Login / Signup</h2>
+                <p>Access your account or create a new {{ role|lower }} account for project tracking and evaluation.</p>
+            </div>
+
+            <div class="row gy-4">
+                <div class="col-md-6">
+                    <div class="card p-4 shadow-sm">
+                        <h5 class="mb-3">Sign in</h5>
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ login_form.non_field_errors }}
+                            <div class="mb-3">
+                                <label class="form-label">Username</label>
+                                {{ login_form.username }}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                {{ login_form.password }}
+                            </div>
+                            <button type="submit" name="login_submit" class="btn btn-primary w-100">Sign In</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card p-4 shadow-sm">
+                        <h5 class="mb-3">Register</h5>
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ signup_form.non_field_errors }}
+                            <div class="mb-3">
+                                <label class="form-label">Username</label>
+                                {{ signup_form.username }}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                {{ signup_form.password1 }}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Confirm Password</label>
+                                {{ signup_form.password2 }}
+                            </div>
+                            <button type="submit" name="signup_submit" class="btn btn-outline-primary w-100">Create
+                                Account</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{% url 'auth_selection' %}" class="text-decoration-none text-muted">Go back to role
+                    selection</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

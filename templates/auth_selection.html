@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="glass-card-static text-center animate-in">
+            <h1 class="display-5">Are you a Student or a Guide?</h1>
+            <p class="text-muted mt-3">Choose your role to continue with secure access and role-specific project
+                workflows.</p>
+
+            <div class="d-flex justify-content-center gap-3 mt-5 flex-column flex-sm-row">
+                <a href="{% url 'role_login' 'student' %}" class="btn btn-primary btn-lg px-5 py-3">
+                    Student Login / Signup
+                </a>
+                <a href="{% url 'role_login' 'guide' %}" class="btn btn-outline-secondary btn-lg px-5 py-3">
+                    Guide Login / Signup
+                </a>
+            </div>
+
+            <p class="text-muted mt-4">Administrators should sign in through the standard <a href="/admin/">Admin</a>
+                panel.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
