@@ -1,2 +1,10 @@
+<<<<<<< HEAD
 django>=5.2
 pillow
+=======
+Django>=5.0,<5.1
+weasyprint>=60.0
+psycopg2-binary>=2.9
+gunicorn>=21.0
+python-decouple>=3.8
+>>>>>>> 2a55c0b7423e0e5327e885164cfe16ed0f77dc77
