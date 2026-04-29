@@ -3,6 +3,7 @@ from django.http import HttpResponse
 import csv
 from .models import Project, Guide, Milestone, Evaluation
 from .forms import ProjectForm, GuideAllotmentForm, MilestoneForm, EvaluationForm
+from .emails import send_milestone_uploaded_email, send_evaluation_submitted_email
 
 
 def home(request):
@@ -45,7 +46,9 @@ def upload_milestone(request):
     form = MilestoneForm(request.POST or None, request.FILES or None)
 
     if form.is_valid():
-        form.save()
+        milestone = form.save()
+        # Send email notification to the Guide
+        send_milestone_uploaded_email(milestone)
         return redirect("upload")
 
     return render(request, "upload.html", {"form": form})
@@ -55,7 +58,9 @@ def evaluate_project(request):
     form = EvaluationForm(request.POST or None, request.FILES or None)
 
     if form.is_valid():
-        form.save()
+        evaluation = form.save()
+        # Send email notification to the Student
+        send_evaluation_submitted_email(evaluation)
         return redirect("evaluate")
 
     return render(request, "guide_evaluation.html", {"form": form})

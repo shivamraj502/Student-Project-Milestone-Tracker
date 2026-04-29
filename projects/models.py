@@ -18,6 +18,7 @@ class Project(models.Model):
 
     student1_name = models.CharField(max_length=100)
     student1_usn = models.CharField(max_length=20)
+    student1_email = models.EmailField(blank=True, null=True, help_text="Email for notification")
 
     student2_name = models.CharField(max_length=100)
     student2_usn = models.CharField(max_length=20)

@@ -14,6 +14,7 @@ class ProjectForm(forms.ModelForm):
             "domain",
             "student1_name",
             "student1_usn",
+            "student1_email",
             "student2_name",
             "student2_usn",
             "student3_name",
