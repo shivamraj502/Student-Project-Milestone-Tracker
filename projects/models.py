@@ -1,10 +1,12 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
+from django.contrib.auth.models import User
 
 # Create your models here.
 
 
 class Guide(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -46,7 +48,7 @@ class Milestone(models.Model):
     stage = models.CharField(max_length=100, choices=STAGE_CHOICES)
     file = models.FileField(
         upload_to="reports/",
-        validators=[FileExtensionValidator(['pdf', 'doc', 'docx', 'zip'])]
+        validators=[FileExtensionValidator(["pdf", "doc", "docx", "zip"])],
     )
 
 
@@ -64,4 +66,6 @@ class Evaluation(models.Model):
     comments = models.TextField()
     coordinator_approval = models.BooleanField(default=False)
     publication_status = models.BooleanField(default=False)
-    certificate_copy = models.FileField(upload_to="certificates/", null=True, blank=True)
+    certificate_copy = models.FileField(
+        upload_to="certificates/", null=True, blank=True
+    )
