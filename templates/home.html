@@ -2,21 +2,30 @@
 
 {% block content %}
 
-<!-- ─── Hero Section ─── -->
 <div class="hero-section animate-in">
+    <span class="eyebrow-pill">{{ user_role }} Workspace</span>
     <h1 class="hero-title">Student Project & Milestone Tracker</h1>
-    <p class="hero-subtitle">
-        A smart academic workflow to register projects, assign guides, track milestone progress, and manage faculty evaluations — all in one place.
-    </p>
+    {% if is_student_user %}
+        <p class="hero-subtitle">
+            Register your project, keep milestone submissions moving, and track progress for the work you own.
+        </p>
+    {% elif is_guide_user %}
+        <p class="hero-subtitle">
+            Review the projects assigned to you, submit evaluations, and keep faculty feedback organized in one place.
+        </p>
+    {% else %}
+        <p class="hero-subtitle">
+            Monitor registrations, milestone activity, guide assignments, and evaluations across the full project pipeline.
+        </p>
+    {% endif %}
 </div>
 
-<!-- ─── Stats Bar ─── -->
 <div class="stats-bar animate-in delay-1">
     <div class="stat-chip">
         <div class="stat-icon purple"><i class="bi bi-folder-fill"></i></div>
         <div>
             <div class="stat-value">{{ project_count|default:"0" }}</div>
-            <div class="stat-label">Projects</div>
+            <div class="stat-label">{% if is_student_user %}My Projects{% elif is_guide_user %}Assigned Projects{% else %}Projects{% endif %}</div>
         </div>
     </div>
     <div class="stat-chip">
@@ -30,81 +39,78 @@
         <div class="stat-icon emerald"><i class="bi bi-person-badge-fill"></i></div>
         <div>
             <div class="stat-value">{{ guide_count|default:"0" }}</div>
-            <div class="stat-label">Guides</div>
+            <div class="stat-label">{% if is_guide_user %}Guide Profile{% else %}Guides{% endif %}</div>
         </div>
     </div>
     <div class="stat-chip">
         <div class="stat-icon cyan"><i class="bi bi-check-circle-fill"></i></div>
         <div>
             <div class="stat-value">{{ evaluation_count|default:"0" }}</div>
-            <div class="stat-label">Evaluated</div>
+            <div class="stat-label">Evaluations</div>
         </div>
     </div>
 </div>
 
-<!-- ─── Feature Grid ─── -->
 <div class="feature-grid">
+    {% if is_student_user or is_admin_user %}
+        <a href="{% url 'register' %}" class="feature-card purple animate-in delay-2">
+            <div class="feature-icon purple">
+                <i class="bi bi-pencil-square"></i>
+            </div>
+            <h4>Register Project</h4>
+            <p>Create new student project records with domain, team, and ownership details.</p>
+            <div class="feature-arrow">Open form <i class="bi bi-arrow-right"></i></div>
+        </a>
 
-    <!-- Register Project -->
-    <a href="/register/" class="feature-card purple animate-in delay-2">
-        <div class="feature-icon purple">
-            <i class="bi bi-pencil-square"></i>
-        </div>
-        <h4>Register Project</h4>
-        <p>Add new student capstone projects with full team details and domain classification.</p>
-        <div class="feature-arrow">Explore <i class="bi bi-arrow-right"></i></div>
-    </a>
+        <a href="{% url 'upload' %}" class="feature-card amber animate-in delay-3">
+            <div class="feature-icon amber">
+                <i class="bi bi-cloud-arrow-up-fill"></i>
+            </div>
+            <h4>Upload Milestone</h4>
+            <p>Attach reports and milestone submissions to the projects you manage.</p>
+            <div class="feature-arrow">Upload files <i class="bi bi-arrow-right"></i></div>
+        </a>
+    {% endif %}
 
-    <!-- Upload Milestone -->
-    <a href="/upload/" class="feature-card amber animate-in delay-3">
-        <div class="feature-icon amber">
-            <i class="bi bi-cloud-arrow-up-fill"></i>
-        </div>
-        <h4>Upload Milestone</h4>
-        <p>Submit reports, synopsis documents, and progress files for each project stage.</p>
-        <div class="feature-arrow">Explore <i class="bi bi-arrow-right"></i></div>
-    </a>
+    {% if is_guide_user or is_admin_user %}
+        <a href="{% url 'evaluate' %}" class="feature-card cyan animate-in delay-3">
+            <div class="feature-icon rose">
+                <i class="bi bi-star-fill"></i>
+            </div>
+            <h4>Evaluate Projects</h4>
+            <p>Review assigned projects, record marks, and share guide comments with the team.</p>
+            <div class="feature-arrow">Start review <i class="bi bi-arrow-right"></i></div>
+        </a>
+    {% endif %}
 
-    <!-- Evaluation -->
-    <a href="/evaluate/" class="feature-card cyan animate-in delay-3">
-        <div class="feature-icon rose">
-            <i class="bi bi-star-fill"></i>
-        </div>
-        <h4>Project Evaluation</h4>
-        <p>Faculty guides review milestone quality, assign marks, provide ratings, and approve for publication.</p>
-        <div class="feature-arrow">Explore <i class="bi bi-arrow-right"></i></div>
-    </a>
-
-    <!-- View Projects -->
-    <a href="/projects-list/" class="feature-card emerald animate-in delay-4">
+    <a href="{% url 'projects_list' %}" class="feature-card emerald animate-in delay-4">
         <div class="feature-icon cyan">
             <i class="bi bi-folder2-open"></i>
         </div>
-        <h4>View All Projects</h4>
-        <p>Browse registered projects, see assigned guides, marks, and track uploaded milestones.</p>
-        <div class="feature-arrow">Explore <i class="bi bi-arrow-right"></i></div>
+        <h4>{% if is_student_user %}My Projects{% elif is_guide_user %}Assigned Projects{% else %}All Projects{% endif %}</h4>
+        <p>Browse the project records available to your role, including milestones and evaluation status.</p>
+        <div class="feature-arrow">Browse list <i class="bi bi-arrow-right"></i></div>
     </a>
 
-    <!-- Export CSV -->
-    <a href="/export/" class="feature-card purple animate-in delay-4">
-        <div class="feature-icon blue">
-            <i class="bi bi-file-earmark-spreadsheet"></i>
-        </div>
-        <h4>Export CSV Report</h4>
-        <p>Download a spreadsheet of all projects with marks, domains, guides, and publication status.</p>
-        <div class="feature-arrow">Download <i class="bi bi-download"></i></div>
-    </a>
+    {% if is_admin_user %}
+        <a href="{% url 'export_csv' %}" class="feature-card purple animate-in delay-4">
+            <div class="feature-icon blue">
+                <i class="bi bi-file-earmark-spreadsheet"></i>
+            </div>
+            <h4>Export CSV Report</h4>
+            <p>Download a system-wide snapshot of projects, marks, publication status, and guide assignments.</p>
+            <div class="feature-arrow">Download <i class="bi bi-download"></i></div>
+        </a>
 
-    <!-- Admin Panel -->
-    <a href="/admin/" class="feature-card purple animate-in delay-5">
-        <div class="feature-icon emerald">
-            <i class="bi bi-gear-fill"></i>
-        </div>
-        <h4>Admin Panel</h4>
-        <p>Full administrative control — manage guides, projects, milestones, and evaluation records.</p>
-        <div class="feature-arrow">Explore <i class="bi bi-arrow-right"></i></div>
-    </a>
-
+        <a href="/admin/" class="feature-card purple animate-in delay-5">
+            <div class="feature-icon emerald">
+                <i class="bi bi-gear-fill"></i>
+            </div>
+            <h4>Admin Panel</h4>
+            <p>Manage guides, projects, users, and secure system data from the Django admin portal.</p>
+            <div class="feature-arrow">Open admin <i class="bi bi-arrow-right"></i></div>
+        </a>
+    {% endif %}
 </div>
 
 {% endblock %}

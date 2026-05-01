@@ -9,7 +9,7 @@
             <!-- Page Header -->
             <div class="page-header">
                 <h2><i class="bi bi-star-fill"></i> <span class="gradient-text">Project Evaluation</span></h2>
-                <p>Faculty guide reviews uploaded milestone quality, assigns marks, and provides evaluation.</p>
+                <p>Faculty guides can review only the projects currently assigned to them.</p>
             </div>
 
             <!-- Validation Errors -->
@@ -40,6 +40,11 @@
                 <div class="mb-4 animate-in delay-1">
                     <label class="form-label">Select Project</label>
                     {{ form.project }}
+                    {% if not form.project.field.queryset %}
+                    <div class="field-hint">
+                        <i class="bi bi-info-circle"></i> No projects are assigned to your guide profile yet.
+                    </div>
+                    {% endif %}
                 </div>
 
                 <div class="row mb-4">

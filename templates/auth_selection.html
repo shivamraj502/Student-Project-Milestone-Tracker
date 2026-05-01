@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="auth-shell auth-selection-shell animate-in">
+    <div class="auth-hero">
+        <span class="eyebrow-pill">Secure Sign In</span>
+        <h1 class="hero-title">Are you a Student or a Guide?</h1>
+        <p class="hero-subtitle">
+            Choose your role to continue to the correct sign-in and registration flow. Administrators should use the standard admin portal.
+        </p>
+    </div>
+
+    <div class="role-selection-grid">
+        <a href="{% url 'role_auth' 'student' %}" class="role-selection-card student">
+            <div class="feature-icon purple">
+                <i class="bi bi-mortarboard-fill"></i>
+            </div>
+            <h3>Student</h3>
+            <p>Register projects, upload milestones, and track your own submissions.</p>
+            <span class="btn-glow role-selection-btn">Continue as Student</span>
+        </a>
+
+        <a href="{% url 'role_auth' 'guide' %}" class="role-selection-card guide">
+            <div class="feature-icon cyan">
+                <i class="bi bi-person-badge-fill"></i>
+            </div>
+            <h3>Guide</h3>
+            <p>Review only the projects assigned to you and submit evaluation feedback.</p>
+            <span class="btn-glow emerald role-selection-btn">Continue as Guide</span>
+        </a>
+    </div>
+
+    <div class="auth-admin-note animate-in delay-2">
+        <i class="bi bi-shield-lock-fill"></i>
+        <span>Admins: use <a href="/admin/">/admin/</a> for full dashboard access.</span>
+    </div>
+</div>
+
+{% endblock %}

@@ -9,7 +9,7 @@
             <!-- Page Header -->
             <div class="page-header">
                 <h2><i class="bi bi-cloud-arrow-up-fill"></i> <span class="gradient-text">Milestone Upload</span></h2>
-                <p>Submit project reports, synopsis documents, and progress files.</p>
+                <p>Submit project reports, synopsis documents, and progress files for projects you own.</p>
             </div>
 
             <!-- Validation Errors -->
@@ -35,6 +35,11 @@
                 <div class="mb-4 animate-in delay-1">
                     <label class="form-label">Select Project</label>
                     {{ form.project }}
+                    {% if not form.project.field.queryset %}
+                    <div class="field-hint">
+                        <i class="bi bi-info-circle"></i> Register a project first to enable milestone uploads.
+                    </div>
+                    {% endif %}
                 </div>
 
                 <div class="mb-4 animate-in delay-2">

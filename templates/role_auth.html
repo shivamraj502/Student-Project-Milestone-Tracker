@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="auth-shell animate-in">
+    <div class="auth-hero">
+        <span class="eyebrow-pill">{{ selected_role }}</span>
+        <h1 class="hero-title">{{ selected_role }} Access</h1>
+        <p class="hero-subtitle">
+            Sign in to your {{ selected_role|lower }} account or create one to continue into the secure workspace.
+        </p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="glass-card-static h-100">
+                <div class="page-header text-start">
+                    <h2><i class="bi bi-box-arrow-in-right"></i> <span class="gradient-text">Sign In</span></h2>
+                    <p>Use your existing {{ selected_role|lower }} account.</p>
+                </div>
+
+                {% if login_form.non_field_errors %}
+                    <div class="alert-glass rose">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <div>{{ login_form.non_field_errors }}</div>
+                    </div>
+                {% endif %}
+
+                <form method="POST" class="form-row-gap">
+                    {% csrf_token %}
+                    <input type="hidden" name="auth_action" value="login">
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        {{ login_form.username }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        {{ login_form.password }}
+                    </div>
+                    <button class="btn-glow w-100" type="submit">
+                        <i class="bi bi-box-arrow-in-right"></i> Sign In
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="glass-card-static h-100">
+                <div class="page-header text-start">
+                    <h2><i class="bi bi-person-plus-fill"></i> <span class="gradient-text">Create Account</span></h2>
+                    <p>Register a new {{ selected_role|lower }} account.</p>
+                </div>
+
+                {% if signup_form.errors %}
+                    <div class="alert-glass rose">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <div>
+                            <strong>Please fix the following errors:</strong>
+                            <ul class="error-list">
+                                {% for field, errors in signup_form.errors.items %}
+                                    {% for error in errors %}
+                                        <li>{{ field|title }}: {{ error }}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <form method="POST" class="form-row-gap">
+                    {% csrf_token %}
+                    <input type="hidden" name="auth_action" value="signup">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">First Name</label>
+                            {{ signup_form.first_name }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Last Name</label>
+                            {{ signup_form.last_name }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        {{ signup_form.username }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        {{ signup_form.email }}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Password</label>
+                            {{ signup_form.password1 }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Confirm Password</label>
+                            {{ signup_form.password2 }}
+                        </div>
+                    </div>
+                    <button class="btn-glow emerald w-100" type="submit">
+                        <i class="bi bi-person-plus-fill"></i> Create {{ selected_role }} Account
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

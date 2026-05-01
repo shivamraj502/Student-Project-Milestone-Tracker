@@ -7,27 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Smart academic workflow for project registration, guide allotment, milestone tracking and evaluation.">
     <title>Student Project Tracker</title>
-
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Custom Styles -->
     <link href="{% static 'style.css' %}" rel="stylesheet">
 </head>
 
 <body>
-
-    <!-- ─── Floating Glassmorphic Navbar ─── -->
     <nav class="navbar navbar-expand-lg navbar-glass">
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand" href="{% if user.is_authenticated %}{% url 'home' %}{% else %}{% url 'auth_selection' %}{% endif %}">
             <i class="bi bi-mortarboard-fill"></i> ProjectTracker
         </a>
 
@@ -38,45 +28,77 @@
 
         <div class="collapse navbar-collapse" id="navContent">
             <div class="ms-auto d-flex align-items-center gap-2 flex-wrap mt-2 mt-lg-0">
-                <a href="/" class="nav-link-pill">
-                    <i class="bi bi-grid-1x2-fill"></i> Dashboard
-                </a>
-                <a href="/register/" class="nav-link-pill">
-                    <i class="bi bi-pencil-square"></i> Register
-                </a>
-                <a href="/upload/" class="nav-link-pill">
-                    <i class="bi bi-cloud-arrow-up-fill"></i> Upload
-                </a>
-                <a href="/evaluate/" class="nav-link-pill">
-                    <i class="bi bi-star-fill"></i> Evaluate
-                </a>
-                <a href="/projects-list/" class="nav-link-pill">
-                    <i class="bi bi-folder2-open"></i> Projects
-                </a>
-                <a href="/export/" class="nav-link-pill">
-                    <i class="bi bi-download"></i> Export
-                </a>
-                <a href="/admin/" class="nav-btn-admin">
-                    <i class="bi bi-gear-fill"></i> Admin
-                </a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'home' %}" class="nav-link-pill">
+                        <i class="bi bi-grid-1x2-fill"></i> Dashboard
+                    </a>
+                    {% if is_student_user or is_admin_user %}
+                        <a href="{% url 'register' %}" class="nav-link-pill">
+                            <i class="bi bi-pencil-square"></i> Register
+                        </a>
+                        <a href="{% url 'upload' %}" class="nav-link-pill">
+                            <i class="bi bi-cloud-arrow-up-fill"></i> Upload
+                        </a>
+                    {% endif %}
+                    {% if is_guide_user or is_admin_user %}
+                        <a href="{% url 'evaluate' %}" class="nav-link-pill">
+                            <i class="bi bi-star-fill"></i> Evaluate
+                        </a>
+                    {% endif %}
+                    <a href="{% url 'projects_list' %}" class="nav-link-pill">
+                        <i class="bi bi-folder2-open"></i> Projects
+                    </a>
+                    {% if is_admin_user %}
+                        <a href="{% url 'export_csv' %}" class="nav-link-pill">
+                            <i class="bi bi-download"></i> Export
+                        </a>
+                        <a href="/admin/" class="nav-btn-admin">
+                            <i class="bi bi-gear-fill"></i> Admin
+                        </a>
+                    {% endif %}
+                    <span class="nav-user-badge">
+                        <i class="bi bi-person-circle"></i> {{ user.username }}{% if user_role %} · {{ user_role }}{% endif %}
+                    </span>
+                    <a href="{% url 'logout' %}" class="nav-link-pill">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                {% else %}
+                    <a href="{% url 'auth_selection' %}" class="nav-link-pill">
+                        <i class="bi bi-compass"></i> Choose Role
+                    </a>
+                    <a href="{% url 'role_auth' 'student' %}" class="nav-link-pill">
+                        <i class="bi bi-mortarboard"></i> Student
+                    </a>
+                    <a href="{% url 'role_auth' 'guide' %}" class="nav-link-pill">
+                        <i class="bi bi-person-badge"></i> Guide
+                    </a>
+                    <a href="/admin/" class="nav-btn-admin">
+                        <i class="bi bi-gear-fill"></i> Admin
+                    </a>
+                {% endif %}
             </div>
         </div>
     </nav>
 
-    <!-- ─── Main Content ─── -->
     <div class="container mt-4 mb-5">
+        {% if messages %}
+            <div class="messages-stack">
+                {% for message in messages %}
+                    <div class="alert-glass {% if message.tags == 'error' %}rose{% else %}emerald-soft{% endif %} animate-in">
+                        <i class="bi {% if message.tags == 'error' %}bi-exclamation-triangle-fill{% else %}bi-check-circle-fill{% endif %}"></i>
+                        <div>{{ message }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
         {% block content %}{% endblock %}
     </div>
 
-    <!-- ─── Footer ─── -->
     <footer class="footer-glass">
-        Built with <i class="bi bi-heart-fill" style="color: var(--accent-rose);"></i> for Academic Excellence &middot;
-        <a href="/admin/">Admin Panel</a>
+        Built for secure academic workflows · <a href="/admin/">Admin Portal</a>
     </footer>
 
-    <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 
 </html>

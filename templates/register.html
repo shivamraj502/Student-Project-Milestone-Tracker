@@ -9,8 +9,24 @@
             <!-- Page Header -->
             <div class="page-header">
                 <h2><i class="bi bi-pencil-square"></i> <span class="gradient-text">Project Registration</span></h2>
-                <p>Register a new capstone project with full team details.</p>
+                <p>Register a new capstone project with full team details. This workspace is limited to student and admin accounts.</p>
             </div>
+
+            {% if form.errors %}
+            <div class="alert-glass rose animate-in delay-1">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <div>
+                    <strong>Please fix the following errors:</strong>
+                    <ul class="error-list">
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <li>{{ field|title }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
 
             <form method="POST" class="form-row-gap">
                 {% csrf_token %}
